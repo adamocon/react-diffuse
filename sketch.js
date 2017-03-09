@@ -6,48 +6,60 @@
 // Coral growth: feed=0.0545, kill=0.062
 // F=0.0620, k=0.0609 U skate region... can't find
 
+
+// Diffusion and feed/kill constants
 var Da = 1.0;
 var Db = 0.5;
 var feed  = 0.0545; // 0.055
 var kill  = 0.062; // 0.062 
 
+// Starting concentrations across grid
 var start_a = 1;
 var start_b = 0;
 
+// Grid size and seed size (area seeded with b, replaced by drawing now)
 var LX = 250;
 var LY = 100;
-var seed_width = 150;
-var seed_height = 40;
+var seed_width = 0;
+var seed_height = 0;
 
+// Timestep and number of timesteps to take before drawing
 var timestep = 1;
 var n_draw = 10;
 
+// Weights for Laplacian (3x3 convolution)
 var cent_weight = -1.0;
 var side_weight = 0.2;
 var diag_weight = 0.05;
 
+// Paintbrush properties for drawing seed
 var add_width  = 2;
 var add_height = 2;
 var add_amount = 0.8;
 
-var x_tilenum = 1;
-var y_tilenum = 2;
+// Number of times grid is repeated in x and y directions
+var x_tilenum;
+var y_tilenum;
 
+// Simulation grids
 var curr_grid;
 var next_grid;
 
+// If simulation should be running or paused
 var play;
 
+// Background colour
 var myred = 0;
 var mygreen = 100;
 var myblue = 160;
 var myalpha = 100;
 
+// Parameters describing how the concentration of b affects colour
 var red_mult = 6000;
 var red_level = 0.32;
 var alpha_mult = 360;
 
-// clean colour scheme
+// nice colour scheme
 // var myred = 0;
 // var mygreen = 60; 100
 // var myblue = 60; 160
@@ -58,13 +70,17 @@ var alpha_mult = 360;
 // var alpha_mult = 360;
 
 function setup(){
+	// Calculate number of tiles needed to tile whole screen
 	x_tilenum = windowWidth / LX;
 	y_tilenum = windowHeight / LY;
 
-	createCanvas(x_tilenum*LX, y_tilenum*LY)
+	// Create the initial canvas
+	createCanvas(x_tilenum*LX, y_tilenum*LY);
 	pixelDensity(1);
+	play = false;
+	draw_rate = 1;
 
-	// Initialise grids
+	// Initialise simulation grids
 	curr_grid = [];
 	next_grid = [];
 	for (var x = 0; x < LX; x++){
@@ -76,17 +92,16 @@ function setup(){
 		}
 	}
 
+	// Seed the grid with a patch of b
+	for (var i = floor((LX-seed_width)/2); i < floor((LX+seed_width)/2); i++){
+		for (var j = floor((LY-seed_height)/2); j < floor((LY+seed_height)/2); j++){
+			curr_grid[i][j] = {a: 0, b: 1, add: false};
+ 	   		next_grid[i][j] = {a: 0, b: 1, add: false};
+		}
+	}
 
-	// // Seed the grid with a patch of b
-	// for (var i = floor((LX-seed_width)/2); i < floor((LX+seed_width)/2); i++){
-	// 	for (var j = floor((LY-seed_height)/2); j < floor((LY+seed_height)/2); j++){
-	// 		curr_grid[i][j] = {a: 0, b: 1, add: false};
- // 	   		next_grid[i][j] = {a: 0, b: 1, add: false};
-	// 	}
-	// }
-	background(0, 246, 225);
+	// Create background colour state
 	loadPixels();
-	// var start3 = millis();
 	for (var x = 0; x < width; x++){
 		for (var y = 0; y < height; y++){
 			var pixel = (x + y*width)*4;
@@ -97,17 +112,14 @@ function setup(){
 			pixels[pixel + 3] = myalpha;
 		}
 	}
-	// updatePixels();
-
-	play = false;
-	draw_rate = 1;
+	updatePixels();
 }
 
 function draw(){
-	// background( 0, 246, 225);
-
-	// Calculate the next frame values
+	// Update the grid values draw_rate times
 	for (var n = 0; n < draw_rate; n++){
+
+		// Allow for in-simulation drawing of b
 		if (mouseIsPressed){
 			for (var xadd = mouseX-add_width; xadd < mouseX+add_width; xadd++){
 				for (var yadd = mouseY-add_height; yadd < mouseY+add_height; yadd++){
@@ -120,6 +132,7 @@ function draw(){
 			}
 		}
 
+		// Carry out the calculations across grid for one timestep
 		for (var x = 0; x < LX; x++){
 			for (var y = 0; y < LY; y++){
 				var a = curr_grid[x][y].a;
@@ -128,6 +141,7 @@ function draw(){
 				var rate_of_change_a = 0;
 				var rate_of_change_b = 0;
 
+				// Carry out rate calcutions if simulations is running
 				if (play){
 				rate_of_change_a += Da*laplacian_a(x, y)
 							        - a*b*b
@@ -137,27 +151,31 @@ function draw(){
 							        - (kill + feed)*b;
 				}
 
+				// Add extra b from drawing
 				if (curr_grid[x][y].add){
 					rate_of_change_b += add_amount;
 				}
 
+				// Update values
 				next_grid[x][y].a = a + (rate_of_change_a * timestep);
 				next_grid[x][y].b = b + (rate_of_change_b * timestep);
 
+				// Limit b to be lower than 1 (required due to drawing)
 				if (next_grid[x][y].b > 1){
 					next_grid[x][y].b = 1;
 				}
 
+				// Reset drawing variable
 				curr_grid[x][y].add = false;
 				next_grid[x][y].add = false;
 			}
 		}
-		curr_grid = next_grid; // update grid
+
+		// Update the grid with the new values
+		curr_grid = next_grid;
 	}
 
-	// After n_draw frame calulations, draw the frame
-	// loadPixels();
-	// var start3 = millis();
+	// Draw the frame
 	for (var x = 0; x < width; x++){
 		for (var y = 0; y < height; y++){
 			var pixel = (x + y*width)*4;
@@ -167,17 +185,12 @@ function draw(){
 			var b = curr_grid[grid_x][grid_y].b;
 
 			pixels[pixel + 0] = myred + floor(red_mult*(b-red_level)); // red
-			// pixels[pixel + 1] = 0; // folor(180*curr_grid[x][y].a);; // green
+			// pixels[pixel + 1] = 0; // floor(180*curr_grid[x][y].a);; // green
 			// pixels[pixel + 2] = floor(200*curr_grid[grid_x][grid_y].a); // blue
 			pixels[pixel + 3] = myalpha + floor(alpha_mult*b); // alpha
 		}
 	}
 	updatePixels();
-
-	// var draw_time = millis() - start3;
-	// console.log(draw_time);
-
-	// console.log(frameRate());
 }
 
 function keyPressed(){
