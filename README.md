@@ -14,7 +14,7 @@ First, grab yourself a copy of the index.html and sketch.js files. Then, simply 
 
 Some tips:
 - Zooming in can produce pleasing results, I like to move around in the range 100 to 500% on Chrome.
-- Fullscreen is extra pretty.
+- Fullscreen = extra pretty.
 
 Enjoy! :) 
 
@@ -26,7 +26,7 @@ I will be working on this project in spare time and trying to make it as visuall
 - A way of changing the parameters in the browser (these are currently hard-coded), or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')
 - Colour options
 - An information page.
-- Pause/play display message.
+- ~~Pause/play display message.~~ *Done!*
 - Touchscreen drawing!
 - ~~Retiling window after resize I guess.~~ *Done!*
 - And more as I think of it!
