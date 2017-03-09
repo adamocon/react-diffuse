@@ -27,6 +27,7 @@ I will be working on this project in spare time and trying to make it as visuall
 - Colour options
 - An information page.
 - Pause/play display message.
+- Touchscreen drawing!
 - ~~Retiling window after resize I guess.~~ *Done!*
 - And more as I think of it!
 
