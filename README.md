@@ -22,7 +22,7 @@ Enjoy! :)
 This code is still pretty experimental, and will probably crash an awful lot. Personally I mostly get issues after zooming in, and resetting the browser usually solves this. I don't find the crashes frequent enough to put me off using it so far, so I probably won't be looking into these too much for the moment.
 
 I will be working on this project in spare time and trying to make it as visually pleasing and user friendly as possible, with a view to deploying it online at some point. In particular, I plan to implement:
-- A start screen explaining how to use the simulation.
+- ~~A start screen explaining how to use the simulation.~~ *Done!*
 - A way of changing the parameters in the browser (these are currently hard-coded), or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')
 - Colour options
 - An information page.
