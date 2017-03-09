@@ -3,10 +3,8 @@ Interactive reaction-diffusion simulation, using the simple 2D Gray-Scott algori
 
 This is a (hopefully!) visually pleasing - and interactive - reaction-diffusion simulation that runs in the browser. You can draw the initial  seed configuration, and then set it off and see what you have created! You can even keep drawing while the simulation is running!
 
-
 ### How to run
 First, grab yourself a copy of the index.html and sketch.js files. Then, simply open the index.html file in the browser of your choice.
-
 
 ### How to use
 - Use the mouse to draw a pattern on the screen. The screen is fully tiled with the simulation grid, so you will see the drawing appear all over the window.
@@ -26,7 +24,7 @@ This code is still pretty experimental, and will probably crash an awful lot. Pe
 
 I will be working on this project in spare time and trying to make it as visually pleasing and user friendly as possible, with a view to deploying it online at some point. In particular, I plan to implement:
 - A start screen explaining how to use the simulation.
-- A way of changing the parameters in the browswer (these are currently hard-coded), or at least choosing an area of the parameter spcae (i.e. 'Coral' or 'Mitosis')
+- A way of changing the parameters in the browser (these are currently hard-coded), or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')
 - Colour options
 - An information page.
 - Pause/play display.
