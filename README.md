@@ -7,14 +7,13 @@ This is a (hopefully!) visually pleasing - and interactive - reaction-diffusion 
 First, grab yourself a copy of the index.html and sketch.js files. Then, simply open the index.html file in the browser of your choice.
 
 ### How to use
-- Use the mouse to draw a pattern on the screen. The screen is fully tiled with the simulation grid, so you will see the drawing appear all over the window.
+- Use the mouse to draw a pattern on the screen. The window is tiled with the simulation grid, so you will see the drawing appear multiple times.
 - Press space to start the simulation running!
 - While it is running, space is used to pause/play the simulation.
 - Extra seed can be drawn while the simulation is running, or paused.
 
 Some tips:
 - Zooming in can produce pleasing results, I like to move around in the range 100 to 500% on Chrome.
-- The tiling fills the browser window - refresh when you resize the window to update this.
 - Fullscreen is extra pretty.
 
 Enjoy! :) 
@@ -27,8 +26,8 @@ I will be working on this project in spare time and trying to make it as visuall
 - A way of changing the parameters in the browser (these are currently hard-coded), or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')
 - Colour options
 - An information page.
-- Pause/play display.
-- Retiling window after resize I guess.
+- Pause/play display message.
+- ~~Retiling window after resize I guess.~~ *Done!*
 - And more as I think of it!
 
 Any suggestions or improvements are very much welcome!
