@@ -18,8 +18,8 @@ var start_a = 1;
 var start_b = 0;
 
 // Grid size and seed size (area seeded with b, replaced by drawing now)
-var LX = 250;
-var LY = 100;
+var LX = 220;
+var LY = 220;
 var seed_width = 0;
 var seed_height = 0;
 
@@ -46,6 +46,7 @@ var curr_grid;
 var next_grid;
 
 // If simulation should be running or paused
+var start = true;
 var play = false;
 var draw_rate = 1;
 
@@ -71,7 +72,7 @@ var alpha_mult = 360;
 // var alpha_mult = 360;
 
 function setup(){
-	// Force pixel density
+	// Force pixel densityW
 	pixelDensity(1);
 
 	// Initialise simulation grids
@@ -177,10 +178,29 @@ function draw(){
 		}
 	}
 	updatePixels();
+
+	if (start){
+		// Start screen
+		textStyle(ITALIC);
+		textAlign(CENTER);
+		textSize(48);
+		fill(255,255,255);
+		text("draw something", width/2, height*2/5);
+		textSize(24);
+		text("press space to play/pause", width/2, height*3/5);
+	} else if (!play){
+		// Pause screen
+		textStyle(ITALIC);
+		textAlign(CENTER);
+		textSize(48);
+		fill(255,255,255);
+		text("paused", width/2, height/2);
+	}
 }
 
 function keyPressed(){
 	if (keyCode === 0x20){
+		start = false;
 		draw_rate=n_draw;
 		play = !play;
 	} else {
