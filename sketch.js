@@ -48,6 +48,7 @@ var next_grid;
 // If simulation should be running or paused
 var start = true;
 var play = false;
+var touched = false;
 var draw_rate = 1;
 
 // Background colour
@@ -106,13 +107,13 @@ function draw(){
 	for (var n = 0; n < draw_rate; n++){
 
 		// Allow for in-simulation drawing of b
-		if (mouseIsPressed){
+		if (mouseIsPressed || touched){
 			for (var xadd = mouseX-add_width; xadd < mouseX+add_width; xadd++){
 				for (var yadd = mouseY-add_height; yadd < mouseY+add_height; yadd++){
 					if ((xadd >= 0) && (xadd < width) && 
 						(yadd >= 0) && (yadd < height)){
-						curr_grid[xadd % LX][yadd % LY].add = true;
-						next_grid[xadd % LX][yadd % LY].add = true;
+						curr_grid[floor(xadd % LX)][floor(yadd % LY)].add = true;
+						next_grid[floor(xadd % LX)][floor(yadd % LY)].add = true;
 					}
 				}
 			}
@@ -196,6 +197,16 @@ function draw(){
 		fill(255,255,255);
 		text("paused", width/2, height/2);
 	}
+}
+
+function touchStarted() {
+	touched = true;
+    // return false;
+}
+
+function touchEnded() {
+	touched = false;
+    // return false;
 }
 
 function keyPressed(){
