@@ -46,7 +46,8 @@ var curr_grid;
 var next_grid;
 
 // If simulation should be running or paused
-var play;
+var play = false;
+var draw_rate = 1;
 
 // Background colour
 var myred = 0;
@@ -70,15 +71,8 @@ var alpha_mult = 360;
 // var alpha_mult = 360;
 
 function setup(){
-	// Calculate number of tiles needed to tile whole screen
-	x_tilenum = windowWidth / LX;
-	y_tilenum = windowHeight / LY;
-
-	// Create the initial canvas
-	createCanvas(x_tilenum*LX, y_tilenum*LY);
+	// Force pixel density
 	pixelDensity(1);
-	play = false;
-	draw_rate = 1;
 
 	// Initialise simulation grids
 	curr_grid = [];
@@ -99,23 +93,14 @@ function setup(){
  	   		next_grid[i][j] = {a: 0, b: 1, add: false};
 		}
 	}
-
-	// Create background colour state
-	loadPixels();
-	for (var x = 0; x < width; x++){
-		for (var y = 0; y < height; y++){
-			var pixel = (x + y*width)*4;
-
-			pixels[pixel + 1] = myred;
-			pixels[pixel + 1] = mygreen;
-			pixels[pixel + 2] = myblue;
-			pixels[pixel + 3] = myalpha;
-		}
-	}
-	updatePixels();
 }
 
 function draw(){
+	// Find number of tiles needed to tile window, and draw the canvas
+	x_tilenum = windowWidth / LX;
+	y_tilenum = windowHeight / LY;
+	createCanvas(x_tilenum*LX, y_tilenum*LY);
+
 	// Update the grid values draw_rate times
 	for (var n = 0; n < draw_rate; n++){
 
@@ -176,6 +161,7 @@ function draw(){
 	}
 
 	// Draw the frame
+	loadPixels();
 	for (var x = 0; x < width; x++){
 		for (var y = 0; y < height; y++){
 			var pixel = (x + y*width)*4;
@@ -185,8 +171,8 @@ function draw(){
 			var b = curr_grid[grid_x][grid_y].b;
 
 			pixels[pixel + 0] = myred + floor(red_mult*(b-red_level)); // red
-			// pixels[pixel + 1] = 0; // floor(180*curr_grid[x][y].a);; // green
-			// pixels[pixel + 2] = floor(200*curr_grid[grid_x][grid_y].a); // blue
+			pixels[pixel + 1] = mygreen; // green
+			pixels[pixel + 2] = myblue; // blue
 			pixels[pixel + 3] = myalpha + floor(alpha_mult*b); // alpha
 		}
 	}
