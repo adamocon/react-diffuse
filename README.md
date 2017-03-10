@@ -9,11 +9,14 @@ First, grab yourself a copy of the index.html and sketch.js files. Then, simply 
 ### How to use
 - Use the mouse to draw a pattern on the screen. The window is tiled with the simulation grid, so you will see the drawing appear multiple times.
 - Press space to start the simulation running!
-- While it is running, space is used to pause/play the simulation.
+- While it is running, press space to pause/play the simulation.
 - Extra seed can be drawn while the simulation is running, or paused.
+- Press the up/down arrows to increase/decrease the brush size.
+- Press 'm' or 'M' to enter mitosis mode (feed = 0.0367, kill = 0.0649).
+- Press 'c' or 'C' to enter coral mode (feed = 0.0545, kill = 0.062).
 
 Some tips:
-- Zooming in can produce pleasing results, I like to move around in the range 100 to 500% on Chrome.
+- Zoom in to change the aesthetic, I like to go anywhere from 100 through to 500% on Chrome.
 - Fullscreen = extra pretty.
 
 Enjoy! :) 
@@ -23,12 +26,13 @@ This code is still pretty experimental, and will probably crash an awful lot. Pe
 
 I will be working on this project in spare time and trying to make it as visually pleasing and user friendly as possible, with a view to deploying it online at some point. In particular, I plan to implement:
 - ~~A start screen explaining how to use the simulation.~~ *Done!*
-- A way of changing the parameters in the browser (these are currently hard-coded), or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')
+- A way of changing the parameters in the browser (these are currently hard-coded), ~~or at least choosing an area of the parameter space (i.e. 'Coral' or 'Mitosis')~~ *Done!*
 - Colour options
 - An information page.
 - ~~Pause/play display message.~~ *Done!*
-- Touchscreen drawing!
+- ~~Touchscreen drawing!~~ *Done!*
 - ~~Retiling window after resize I guess.~~ *Done!*
+- ~~Variable brush sizes~~ *Done!*
 - And more as I think of it!
 
 Any suggestions or improvements are very much welcome!
