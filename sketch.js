@@ -10,8 +10,8 @@
 // Diffusion and feed/kill constants
 var Da = 1.0;
 var Db = 0.5;
-var feed  = 0.0545; // 0.055
-var kill  = 0.062; // 0.062 
+var feed  = 0.0545;
+var kill  = 0.062;
 
 // Starting concentrations across grid
 var start_a = 1;
@@ -33,9 +33,12 @@ var side_weight = 0.2;
 var diag_weight = 0.05;
 
 // Paintbrush properties for drawing seed
-var add_width  = 2;
-var add_height = 2;
+var add_width  = 10;
+var add_height = 10;
 var add_amount = 0.8;
+var min_brush_size = 2;
+var max_brush_size = 50;
+var brush_change_ratio = 1.4;
 
 // Number of times grid is repeated in x and y directions
 var x_tilenum;
@@ -147,9 +150,9 @@ function draw(){
 				next_grid[x][y].a = a + (rate_of_change_a * timestep);
 				next_grid[x][y].b = b + (rate_of_change_b * timestep);
 
-				// Limit b to be lower than 1 (required due to drawing)
-				if (next_grid[x][y].b > 1){
-					next_grid[x][y].b = 1;
+				// Limit b to be lower than 0.9 (required due to drawing)
+				if (next_grid[x][y].b > 0.9){
+					next_grid[x][y].b = 0.9;
 				}
 
 				// Reset drawing variable
@@ -186,16 +189,25 @@ function draw(){
 		textAlign(CENTER);
 		textSize(48);
 		fill(255,255,255);
-		text("draw something", width/2, height*2/5);
+		text("draw something", width/2, height*8/20);
 		textSize(24);
-		text("press space to play/pause", width/2, height*3/5);
+		text("space to play/pause", width/2, height*12/20);
+		text("up to increase brush size", width/2, height*13/20);
+		text("down to decrease brush size", width/2, height*14/20);
+		text("m to enter mitosis mode", width/2, height*15/20);
+		text("c to enter coral mode", width/2, height*16/20);
 	} else if (!play){
 		// Pause screen
 		textStyle(ITALIC);
 		textAlign(CENTER);
 		textSize(48);
 		fill(255,255,255);
-		text("paused", width/2, height/2);
+		text("paused", width/2, height*7/20);
+		textSize(24);
+		text("up to increase brush size", width/2, height*12/20);
+		text("down to decrease brush size", width/2, height*13/20);
+		text("m to enter mitosis mode", width/2, height*14/20);
+		text("c to enter coral mode", width/2, height*15/20);
 	}
 }
 
@@ -210,12 +222,48 @@ function touchEnded() {
 }
 
 function keyPressed(){
-	if (keyCode === 0x20){
+	if (keyCode === 32){
+		// Space = toggle pause/play
 		start = false;
 		draw_rate=n_draw;
 		play = !play;
+	} else if (keyCode === 67 || keyCode === 99){
+		// C or c = coral mode
+		feed  = 0.0545;
+		kill  = 0.062;
+	} else if (keyCode === 77 || keyCode === 109){
+		// M or m = mitosis mode
+		feed  = 0.0367;
+		kill  = 0.0649;
+	} else if (keyCode === DOWN_ARROW){
+		// Decrease brush size
+		change_brush_size('decrease');
+	} else if (keyCode === UP_ARROW){
+		// Increase brush size
+		change_brush_size('increase')
 	} else {
 		return false;
+	}
+}
+
+function change_brush_size(mode){
+	if (mode == 'decrease'){
+		// Decrease brush size
+		add_width /= brush_change_ratio;
+		add_height /= brush_change_ratio;
+	} else if (mode == 'increase'){
+		// Increase brush size
+		add_width *= brush_change_ratio;
+		add_height *= brush_change_ratio;
+	}
+
+	// Limit brush size
+	if (add_width < min_brush_size){
+		add_width = min_brush_size;
+		add_height = min_brush_size;
+	} else if (add_width > max_brush_size){
+		add_width = max_brush_size;
+		add_height = max_brush_size;
 	}
 }
 
