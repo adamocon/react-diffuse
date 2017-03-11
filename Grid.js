@@ -27,22 +27,24 @@ function Grid(LX, LY, start_a, start_b, seed_width, seed_height) {
 	this.laplacian = function(x, y, param){
 		var delta_param = 0;
 
+		var grid = this.grid;
+
 		var left = this.find_left(x);
 		var right = this.find_right(x);
 		var up = this.find_up(y);
 		var down = this.find_down(y);
 
-		delta_param += cent_weight * this.grid[x][y][param];
+		delta_param += cent_weight * grid[x][y][param];
 
-		delta_param += side_weight * this.grid[x][up][param];
-		delta_param += side_weight * this.grid[x][down][param];
-		delta_param += side_weight * this.grid[left][y][param];
-		delta_param += side_weight * this.grid[right][y][param];
+		delta_param += side_weight * grid[x][up][param];
+		delta_param += side_weight * grid[x][down][param];
+		delta_param += side_weight * grid[left][y][param];
+		delta_param += side_weight * grid[right][y][param];
 
-		delta_param += diag_weight * this.grid[left][up][param];
-		delta_param += diag_weight * this.grid[left][down][param];
-		delta_param += diag_weight * this.grid[right][up][param];
-		delta_param += diag_weight * this.grid[right][down][param];
+		delta_param += diag_weight * grid[left][up][param];
+		delta_param += diag_weight * grid[left][down][param];
+		delta_param += diag_weight * grid[right][up][param];
+		delta_param += diag_weight * grid[right][down][param];
 
 		return delta_param		
 	}

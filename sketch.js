@@ -27,13 +27,8 @@ var seed_height = 0;
 var timestep = 1;
 var n_draw = 10;
 
-// Paintbrush properties for drawing seed
-var add_width  = 10;
-var add_height = 10;
+// Amount B concentration is increased by paintbrush
 var add_amount = 0.8;
-var min_brush_size = 2;
-var max_brush_size = 50;
-var brush_change_ratio = 1.4;
 
 // Start screen displayed, simulation paused
 var start = true;
@@ -77,27 +72,22 @@ function draw(){
 	var y_tilenum = windowHeight / LY;
 	createCanvas(x_tilenum*LX, y_tilenum*LY);
 
+	var curr_vals = curr_grid.grid;
+	var next_vals = next_grid.grid;
+
 	// Update the grid values draw_rate times
 	for (var n = 0; n < draw_rate; n++){
 
 		// Allow for in-simulation drawing of b
 		if (mouseIsPressed || touched){
-			for (var xadd = mouseX-add_width; xadd < mouseX+add_width; xadd++){
-				for (var yadd = mouseY-add_height; yadd < mouseY+add_height; yadd++){
-					if ((xadd >= 0) && (xadd < width) && 
-						(yadd >= 0) && (yadd < height)){
-						curr_grid.grid[floor(xadd % LX)][floor(yadd % LY)].add = true;
-						next_grid.grid[floor(xadd % LX)][floor(yadd % LY)].add = true;
-					}
-				}
-			}
+			brush_stroke([curr_vals, next_vals]);
 		}
 
 		// Carry out the calculations across grid for one timestep
 		for (var x = 0; x < LX; x++){
 			for (var y = 0; y < LY; y++){
-				var a = curr_grid.grid[x][y].a;
-				var b = curr_grid.grid[x][y].b;
+				var a = curr_vals[x][y].a;
+				var b = curr_vals[x][y].b;
 
 				var rate_of_change_a = 0;
 				var rate_of_change_b = 0;
@@ -113,22 +103,22 @@ function draw(){
 				}
 
 				// Add extra b from drawing
-				if (curr_grid.grid[x][y].add){
+				if (curr_vals[x][y].add){
 					rate_of_change_b += add_amount;
 				}
 
 				// Update values
-				next_grid.grid[x][y].a = a + (rate_of_change_a * timestep);
-				next_grid.grid[x][y].b = b + (rate_of_change_b * timestep);
+				next_vals[x][y].a = a + (rate_of_change_a * timestep);
+				next_vals[x][y].b = b + (rate_of_change_b * timestep);
 
 				// Limit b to be lower than 0.9 (required due to drawing)
-				if (next_grid.grid[x][y].b > 0.9){
-					next_grid.grid[x][y].b = 0.9;
+				if (next_vals[x][y].b > 0.9){
+					next_vals[x][y].b = 0.9;
 				}
 
 				// Reset drawing variable
-				curr_grid.grid[x][y].add = false;
-				next_grid.grid[x][y].add = false;
+				curr_vals[x][y].add = false;
+				next_vals[x][y].add = false;
 			}
 		}
 
@@ -144,7 +134,7 @@ function draw(){
 			grid_x = x % LX;
 			grid_y = y % LY;
 
-			var b = curr_grid.grid[grid_x][grid_y].b;
+			var b = curr_vals[grid_x][grid_y].b;
 
 			pixels[pixel + 0] = myred + floor(red_mult*(b-red_level)); // red
 			pixels[pixel + 1] = mygreen; // green
@@ -179,27 +169,6 @@ function draw(){
 		text("down to decrease brush size", width/2, height*13/20);
 		text("m to enter mitosis mode", width/2, height*14/20);
 		text("c to enter coral mode", width/2, height*15/20);
-	}
-}
-
-function change_brush_size(mode){
-	if (mode == 'decrease'){
-		// Decrease brush size
-		add_width /= brush_change_ratio;
-		add_height /= brush_change_ratio;
-	} else if (mode == 'increase'){
-		// Increase brush size
-		add_width *= brush_change_ratio;
-		add_height *= brush_change_ratio;
-	}
-
-	// Limit brush size
-	if (add_width < min_brush_size){
-		add_width = min_brush_size;
-		add_height = min_brush_size;
-	} else if (add_width > max_brush_size){
-		add_width = max_brush_size;
-		add_height = max_brush_size;
 	}
 }
 
