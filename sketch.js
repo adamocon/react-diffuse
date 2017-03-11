@@ -18,7 +18,7 @@ var seed_height = 0;
 
 // Timestep and number of timesteps to take before drawing
 var timestep = 1;
-var n_draw = 10;
+var n_draw = 2;
 
 // Amount B concentration is increased by paintbrush
 var add_amount = 0.8;
@@ -41,8 +41,9 @@ var red_level = 0.32;
 var alpha_mult = 360;
 
 function setup(){
-	// Force pixel density
+	// Force pixel density and setup the canvas
 	pixelDensity(1);
+	createCanvas(windowWidth, windowHeight);
 
 	// Initialise grids
 	curr_grid = new Grid(LX, LY, start_a, start_b, seed_width, seed_height);
@@ -50,11 +51,6 @@ function setup(){
 }
 
 function draw(){
-	// Find number of tiles needed to tile window, and draw the canvas
-	var x_tilenum = windowWidth / LX;
-	var y_tilenum = windowHeight / LY;
-	createCanvas(x_tilenum*LX, y_tilenum*LY);
-
 	var curr_vals = curr_grid.grid;
 	var next_vals = next_grid.grid;
 
