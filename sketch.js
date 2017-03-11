@@ -2,8 +2,8 @@
 // A is blue, B is red.
 // Extra notes at the bottom of the script.
 
-// 		Mitosis:   feed=0.0367, kill=0.0649
-// Coral growth:   feed=0.0545, kill=0.062
+// 		  Mitosis: feed=0.0367, kill=0.0649
+//   Coral growth: feed=0.0545, kill=0.062
 // U skate region: feed=0.0620, kill=0.0609
 
 
@@ -18,8 +18,8 @@ var start_a = 1;
 var start_b = 0;
 
 // Grid size and seed size (area seeded with b, replaced by drawing now)
-var LX = 140;
-var LY = 140;
+var LX = 220;
+var LY = 220;
 var seed_width = 0;
 var seed_height = 0;
 

@@ -12,7 +12,7 @@ function Grid(LX, LY, start_a, start_b, seed_width, seed_height) {
 	for (var x = 0; x < LX; x++){
 		this.grid[x] = [];
 		for (var y = 0; y < LY; y++){
-				this.grid[x][y] = {a: start_a, b: start_b, add: false}
+			this.grid[x][y] = {a: start_a, b: start_b, add: false}
 		}
 	}
 
@@ -49,34 +49,18 @@ function Grid(LX, LY, start_a, start_b, seed_width, seed_height) {
 
 	// Helper functions to find neighbouring coordinates with periodic BCs
 	this.find_left = function(x){
-		if (x == 0){
-			return LX-1
-		} else{
-			return x-1
-		}
+		return (x == 0 ? LX-1 : x-1)
 	}
 
 	this.find_right = function(x){
-		if (x == LX-1){
-			return 0
-		} else{
-			return x+1
-		}
+		return (x == LX-1 ? 0 : x+1)
 	}
 
 	this.find_up = function(y){
-		if (y == 0){
-			return LY-1
-		} else{
-			return y-1
-		}
+		return (y == 0 ? LY-1 : y-1)
 	}
 
 	this.find_down = function(y){
-		if (y == LY-1){
-			return 0
-		} else{
-			return y+1
-		}
+		return (y == LY-1 ? 0 : y+1)
 	}
 }
