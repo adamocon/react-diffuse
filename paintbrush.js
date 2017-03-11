@@ -1,9 +1,9 @@
 // Library of paintbrush functions
 
 // Paintbrush properties
-var add_width  = 10;
-var add_height = 10;
-var min_brush_size = 2;
+var add_width  = 6;
+var add_height = 6;
+var min_brush_size = 3;
 var max_brush_size = 50;
 var brush_change_ratio = 1.4;
 
@@ -37,7 +37,11 @@ function brush_stroke(vals_grids){
 			for (var yadd = mouseY-add_height; yadd < mouseY+add_height; yadd++){
 				if ((xadd >= 0) && (xadd < width) && 
 					(yadd >= 0) && (yadd < height)){
-					vals[floor(xadd % LX)][floor(yadd % LY)].add = true;
+
+					var grid_x = floor((xadd / pixel_stretch)) % LX;
+					var grid_y = floor((yadd / pixel_stretch)) % LY;
+
+					vals[grid_x][grid_y].add = true;
 				}
 			}
 		}

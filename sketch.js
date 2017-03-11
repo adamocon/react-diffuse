@@ -11,14 +11,15 @@ var start_a = 1;
 var start_b = 0;
 
 // Grid size and seed size (area seeded with b, replaced by drawing now)
-var LX = 220;
-var LY = 220;
+var LX = 70;
+var LY = 70;
 var seed_width = 0;
 var seed_height = 0;
 
 // Timestep and number of timesteps to take before drawing
 var timestep = 1;
-var n_draw = 2;
+var n_draw = 4;
+var pixel_stretch = 2;
 
 // Amount B concentration is increased by paintbrush
 var add_amount = 0.8;
@@ -110,9 +111,9 @@ function draw(){
 	for (var x = 0; x < width; x++){
 		for (var y = 0; y < height; y++){
 			var pixel = (x + y*width)*4;
-			grid_x = x % LX;
-			grid_y = y % LY;
 
+			var grid_x = floor((x / pixel_stretch)) % LX;
+			var grid_y = floor((y / pixel_stretch)) % LY;
 			var b = curr_vals[grid_x][grid_y].b;
 
 			pixels[pixel + 0] = myred + floor(red_mult*(b-red_level)); // red
