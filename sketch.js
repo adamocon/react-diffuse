@@ -1,11 +1,4 @@
-// Feed A, kill B. Reaction equation is: 2B + A -> 3B.
-// A is blue, B is red.
-// Extra notes at the bottom of the script.
-
-// 		  Mitosis: feed=0.0367, kill=0.0649
-//   Coral growth: feed=0.0545, kill=0.062
-// U skate region: feed=0.0620, kill=0.0609
-
+// Main script
 
 // Diffusion and feed/kill constants
 var Da = 1.0;
@@ -46,16 +39,6 @@ var myalpha = 100;
 var red_mult = 6000;
 var red_level = 0.32;
 var alpha_mult = 360;
-
-// nice colour scheme
-// var myred = 0;
-// var mygreen = 60; 100
-// var myblue = 60; 160
-// var myalpha = 100;
-
-// var red_mult = 6000;
-// var red_level = 0.34; 0.31
-// var alpha_mult = 360;
 
 function setup(){
 	// Force pixel density
@@ -171,42 +154,3 @@ function draw(){
 		text("c to enter coral mode", width/2, height*15/20);
 	}
 }
-
-// Additional options can give more possible effects:
-// Orientation: diffusion can occur faster in one direction than another to give an orientation to the results.
-// Style Map: the feed and kill rates can vary across the grid to give different patterns in different areas.
-// Flow: the chemicals can flow across the grid to give various dynamic effects.
-// Size: the scale of the pattern changes when the reaction rate is sped up or slowed down relative to the diffusion rate.
-
-// Acorn motif!
-	// var Da = 1.0;
-	// var Db = 0.5;
-	// var feed  = 0.0545; // 0.055
-	// var kill  = 0.062; // 0.062 
-
-	// var LX = 150;
-	// var LY = 150;
-	// var seed_width = 95;
-	// var seed_height = 95;
-
-// Backbone creator
-	// var Da = 1.0;
-	// var Db = 0.5;
-	// var feed  = 0.0545; // 0.055
-	// var kill  = 0.062; // 0.062 
-
-	// var LX = 150;
-	// var LY = 150;
-	// var seed_width = 150;
-	// var seed_height = 5 or 40;
-
-// Tail
-	// var Da = 1.0;
-	// var Db = 0.20;
-	// var feed  = 0.0367; // 0.055
-	// var kill  = 0.0649; // 0.062 
-
-	// var LX = 400;
-	// var LY = 40;
-	// var seed_width = 10;
-	// var seed_height = 40;
