@@ -68,24 +68,23 @@ function draw(){
 			for (var y = 0; y < LY; y++){
 				var a = curr_vals[x][y].a;
 				var b = curr_vals[x][y].b;
+				var paint = curr_vals[x][y].add;
 
 				var rate_of_change_a = 0;
 				var rate_of_change_b = 0;
 
 				// Carry out rate calcutions if simulations is running
 				if (play){
-				rate_of_change_a += Da*curr_grid.laplacian(x, y, 'a')
-							        - a*b*b
-							        + feed*(1 - a);
-				rate_of_change_b += Db*curr_grid.laplacian(x, y, 'b')
-							        + a*b*b
-							        - (kill + feed)*b;
+					rate_of_change_a += Da*curr_grid.laplacian(x, y, 'a')
+								        - a*b*b
+								        + feed*(1 - a);
+					rate_of_change_b += Db*curr_grid.laplacian(x, y, 'b')
+								        + a*b*b
+								        - (kill + feed)*b;
 				}
 
 				// Add extra b from drawing
-				if (curr_vals[x][y].add){
-					rate_of_change_b += add_amount;
-				}
+				rate_of_change_b += (paint ? add_amount : 0);
 
 				// Update values
 				next_vals[x][y].a = a + (rate_of_change_a * timestep);
@@ -124,30 +123,6 @@ function draw(){
 	}
 	updatePixels();
 
-	if (start){
-		// Start screen
-		textStyle(ITALIC);
-		textAlign(CENTER);
-		textSize(48);
-		fill(255,255,255);
-		text("draw something", width/2, height*6/20);
-		textSize(24);
-		text("space to play/pause", width/2, height*12/20);
-		text("up to increase brush size", width/2, height*13/20);
-		text("down to decrease brush size", width/2, height*14/20);
-		text("m to enter mitosis mode", width/2, height*15/20);
-		text("c to enter coral mode", width/2, height*16/20);
-	} else if (!play){
-		// Pause screen
-		textStyle(ITALIC);
-		textAlign(CENTER);
-		textSize(48);
-		fill(255,255,255);
-		text("paused", width/2, height*7/20);
-		textSize(24);
-		text("up to increase brush size", width/2, height*12/20);
-		text("down to decrease brush size", width/2, height*13/20);
-		text("m to enter mitosis mode", width/2, height*14/20);
-		text("c to enter coral mode", width/2, height*15/20);
-	}
+	// Display start or pause screen as appropriate
+	show_any_displays(start, play);
 }

@@ -2,12 +2,10 @@
 
 function touchStarted() {
 	touched = true;
-    // return false;
 }
 
 function touchEnded() {
 	touched = false;
-    // return false;
 }
 
 function keyPressed(){

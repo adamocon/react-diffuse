@@ -25,14 +25,14 @@ function Grid(LX, LY, start_a, start_b, seed_width, seed_height) {
 
 	// Laplacian operator (3x3 convolution)
 	this.laplacian = function(x, y, param){
-		var delta_param = 0;
-
 		var grid = this.grid;
 
 		var left = this.find_left(x);
 		var right = this.find_right(x);
 		var up = this.find_up(y);
 		var down = this.find_down(y);
+
+		var delta_param = 0;
 
 		delta_param += cent_weight * grid[x][y][param];
 
